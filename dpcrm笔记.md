@@ -114,7 +114,7 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
 在 Vue.js 中，DOM 更新是异步执行的，当数据发生变化时，Vue.js 会对 DOM 进行重新渲染。而 $nextTick 方法允许你在 DOM 更新循环结束后执行特定的代码，以确保在对更新后的 DOM 进行操作时获取到最新的 DOM 结构
 在 Vue 3 中，$nextTick 方法已被移除，并被替换为新的 API。Vue 3 采用了 Composition API，通过使用 await 和 nextTick 函数来实现类似的功能。
 但是这是使用setup()的前提下
-#### vi. $refs
+#### iv. $refs
 是Vue.js 实例的一个属性，用于访问在模板中通过 ref 属性声明的子组件或 DOM 元素。
 通过在模板中给子组件或 DOM 元素添加 ref 属性，Vue.js 将会在组件实例或父组件的 $refs 属性中创建一个引用。
 
@@ -124,6 +124,24 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
     vue中setup的作用：setup的设计是为了使用组合式api
     setup在生命周期中的位置：setup位于created 和beforeCreated之前,用于代替created 和beforeCreated,但是在setup函数里不能访问到this,另外setup内可以通过以下hook操作整个生命周期
     setup参数：setup可接受props,context,其中props由于是响应式数据,不能直接解构赋值,context不是响应式数据,可以直接解构赋值;setup必须返回一个对象,一旦return,就可以像vue2.x的方式使用该属性
+
+### vi. class PasswordAPIView()
+    def password_validate(password):
+        return bool(set(password) & set(string.ascii_letters)) and bool(set(password) & set(string.digits)) and len(
+            password) >= 8
+
+    它包含至少一个小写或大写字母（来自 string.ascii_letters 字符串）。
+    它包含至少一个数字（来自 string.digits 字符串）。
+    它的长度至少为 8 个字符。
+
+  * set(string.ascii_letters):检查密码字符和小写和大写字母集合的交集。
+  * set(string.digits):检查密码字符和数字集合的交集
+  * bool(set(password) & set(string.ascii_letters)) and bool(set(password) & set(string.digits)) and len(
+            password) >= 8:该密码设置至少8个字符
+### vii. def create(self, validated_data: Dict[str, Any]) -> Customer:
+    * 创建新客户信息
+    * validated_data: Dict[str, Any]:validated_data的类型是dict
+    * 返回类型是 Customer
 
 =====================================================================================================
 1. function roleName(role):处理账号的角色(权限),返回中文角色名称;
@@ -247,9 +265,142 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
 17. class CrmMain:管理主页面包括上面各页面的跳转链接
     * 构造函数:constructor(profile)
     * 方法:
-      * provide()
-      * getRoleName()
-      * mounted()
-      * handleEnterKey(event)
-      * searchCustomer():搜索用户
+        * provide()
+        * getRoleName()
+        * mounted()
+        * handleEnterKey(event)
+        * searchCustomer():搜索用户
     * async logout():登出
+    * static变量:
+        * static components = {Pagination, CustomerEditor, CustomerViewer};
+        * static routes = [{ path: '/', component: Dashboard },]
+        
+              path 是 URL 路径，表示前端应用程序中的特定页面或组件。它可以是一个相对路径（如 '/'），也可以包含动态参数（如 '/users/:id'）。
+              component 是与该路径关联的组件，它可以是一个 Vue.js 组件、React 组件或其他前端框架中的组件。
+              当用户访问指定的路径时，与该路径关联的组件将被加载和渲染。
+              在给定的示例中，{ path: '/', component: Dashboard } 表示当用户访问根路径 '/' 时，将加载名为 Dashboard 的组件。
+
+
+任务:
+1. 添加实际拜访人姓名,仅管理员权限,非管理员选择无效(进度:完成,设想要不要弄一个提示框)
+2. 添加地点筛选功能,弄成CityFilter组件(进度:完成)
+3. 在合同列表中增加列表,展示签订人员,开始时间,结束时间.还有增加和修改操作,在该操作中需要展示该model中的所有内容.
+    - 完成添加列表,增加功能,
+    - 待完成:修改,展示详细信息(打算展示的时候图标为信封打开效果)
+    - 出现的问题:修改的时候出现:上传合同信息出错了: 405，返回结果: [object Object],PATCH http://127.0.0.1:8000/api/public/customers/2/contracts/ 405 (Method Not Allowed)原因：url地址错误：/api/public/customers/" + this.customerProp.id  + "/contracts/" + this.contract.id + "/"
+    - 展示详细信息的时候页面为空,ncaught SyntaxError: Unexpected end of input ···原因：写的v-if="select=='detailsContract'"写成：v-if="select=='ditailsContract'"
+4. 进阶:添加时候原框左移,添加新框(完成)
+5. 保存并下一个 功能、
+
+### api_public的类的作用:
+1. class Http401(APIException):自定义的异常类，它继承自 Django REST Framework 中的 APIException 类。
+
+       APIException 是 Django REST Framework 提供的异常基类，用于表示 API 请求处理过程中可能出现的异常情况。
+       通过继承 APIException 类，并命名为 Http401，可以创建一个特定的异常类，用于表示 HTTP 401 错误（未授权）。
+2. class CrmPagination(PageNumberPagination):CRM分页
+3. class CrmViewMixin:自定义混合类（mixin class），用于在视图类中添加与 CRM 相关的共享功能和行为。
+4. class CrmModelViewSet(CrmViewMixin, ModelViewSet):Crm模型视图集
+    
+       ModelViewSet 是 Django REST Framework 提供的一个视图集类，
+       它封装了常见的 CRUD（创建、读取、更新、删除）操作，并提供了默认的路由和操作方法。
+5. class CustomerSerializer(serializers.ModelSerializer):序列化器（serializer）类
+6. class ContractSerializer(serializers.ModelSerializer):序列化器（serializer）类
+7. class VisitationSerializer(serializers.ModelSerializer):序列化器（serializer）类
+8. class CustomerViewSet(CrmModelViewSet):客户视图集
+9. class ContractViewSet(CrmModelViewSet):合约视图集
+10. class VisitationViewSet(CrmModelViewSet):访问视图集
+    * def get_queryset(self):
+    * def get_serializer_context(self):
+    * def perform_update(self, serializer):
+    * 路径: 
+      * path("customers/<int:customer_id>/visitations/", VisitationViewSet.as_list_view()),
+      * path("customers/<int:customer_id>/visitations/<int:id>/", VisitationViewSet.as_detail_view()),
+                
+            * as_list_view() 方法用于生成用于处理访问记录列表的视图函数或视图类。
+                             这意味着当发送一个 GET 请求到该视图时，它将返回访问记录的列表数据。 
+            * as_detail_view() 方法用于生成用于处理单个访问记录的详细信息的视图函数或视图类。
+                             这意味着当发送一个 GET 请求到该视图时，它将返回指定访问记录的详细数据。
+11. class RichManSerializer(serializers.ModelSerializer):序列化器（serializer）类
+12. class RichManViewSet(CrmModelViewSet):通过继承混合类来拓展管理员的功能
+13. class ProfileSerializer(serializers.ModelSerializer):序列化器（serializer）类
+14. class ProfileAPIView(CrmViewMixin, RetrieveUpdateAPIView):
+        
+        RetrieveUpdateAPIView 是一个内置的视图类，用于处理获取和更新单个对象的 API 请求。
+        通过继承 RetrieveUpdateAPIView，ProfileAPIView 可以处理获取和更新用户配置文件信息的请求。
+15. class PasswordAPIView(CrmViewMixin, APIView):
+
+        APIView 是一个基本的视图类，提供了处理各种类型请求的灵活性。
+        通过继承 APIView，PasswordAPIView 可以实现自定义的逻辑来处理与密码相关的 API 请求。
+=====================Models.py===============================
+class Contract:
+operator:Richman->签订人员
+customer:Customer->客户
+begin:date->开始时间
+end:date->结束时间
+signed:date->签订日期
+content:str->合同内容
+attachment:Optional[FiledFile]->合同附件
+===================(嵌套型)Modal的close结构====================
+```html
+<!--父组件-->
+<div class="modal fade in customer-viewer" @click.self="close(false)">
+    <div class="viewer-page" :style="{ marginLeft: openNextModal ? '8%' : '38.2%' }">
+        <button type="button" class="close" @click.prevent="close(true)" v-if="!closeNextModal"><span aria-hidden="true">×</span></button>
+    </div>
+        <ContractViewer :customerProp="customer" :select="operationSelect" :contract="contract" v-if="!closeNextModal"
+                         @createdContract="contract" @closeChildModal="closeChildModal"></ContractViewer>
+</div>
+<javascript>        
+    close(force) {
+            if (!force && !!this.visitationContent) {
+                return false;
+            }
+            clear(this.customer);
+            return true;
+        }
+<!--    closeChildModal(){-->
+<!--            console.log("colseChildModal", this.closeNextModal);-->
+<!--            this.closeNextModal=true;-->
+<!--            console.log("closeChildModal", this.closeNextModal);-->
+<!--        }-->
+    closeChildModal(value){
+        try{
+            if (value){
+                let contract=document.querySelector(".modal.fade.in.contractView")
+                // contract.parentNode.removeChild(contract);
+                if (contract) {
+                  contract.style.display = 'none';
+                }
+                this.closeNextModal=!this.closeNextModal;
+            }
+        }catch (error){
+            console.error("出错了",error);
+        }
+    }
+</javascript>
+<!--子组件 ContractViewer-->
+<div class="modal fade in contractView" @click.self="closeContract(false)">
+  <div class="viewer-page">
+    <button type="button" class="close" @click="closeContract(true)"><span aria-hidden="true">&times;</span></button>
+    <div class="modal-footer">
+        <div><strong>{{ errorMessage }}</strong></div>
+        <button type="button" class="btn pull-left" @click="closeContract()">取消/返回</button>
+        <button type="button" class="btn" @click="saveAndNext()" v-if="select=='createContract'">保存并下一个</button>
+        <button type="button" class="btn btn-primary" @click="saveAndClose()" v-if="select!=='detailsContract'">保存并关闭</button>
+    </div>
+  </div>
+</div>
+<javascript>closeContract(force) {
+            if (!force && $('input[type=file]:focus').length > 0) {
+                return false;
+            }
+            this.$emit("closeChildModal",true);
+        }
+</javascript>
+```
+要怎样才能在点击子组件的closeContract()时候只关闭子模态框,而不关闭父模态框??
+将子模态框的css进行display:none
+
+剩保存并下一个没实现(删除,要实现吗)
+完善搜索界面,输入搜索内容后,展示所有用户(分权限吧) 完成11.27
+更新的时候不是覆盖而是重新创建了一条(需改) 完成11.27
