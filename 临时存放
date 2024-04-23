@@ -1,0 +1,234 @@
+<input class="choose" type="text" placeholder="请输入" readonly="readonly"><img src="{% static 'desktop/recgarge_btn1.webp' %}">
+
+    <div class="option">
+
+        <ul>
+
+            <li class="question">11</li>
+
+            <li class="question">22</li>
+
+            <li class="question">33</li>
+
+        </ul>
+            </div>
+
+
+            .choose {
+
+            padding: 8px 5px;
+
+            width: 210px;
+
+            outline: none;
+
+            border: 1px solid rebeccapurple;
+
+            border-radius: 5px;
+
+        }
+
+        .option {
+
+            display: none;
+
+            width: 180px;
+
+            padding: 5px 10px;
+
+            border-width: 0 1px 1px 1px;
+
+            border-style: solid;
+
+            border-color: #e2b5b5;
+
+        }
+
+        ul,
+
+        li {
+
+            margin: 0;
+
+            padding: 0;
+
+            list-style: none;
+
+        }
+
+
+        <script>
+
+            var choose = document.getElementsByClassName('choose')
+
+            var option = document.getElementsByClassName('option')
+
+            var question = document.getElementsByClassName('question')
+
+            choose[0].addEventListener('click', function () {
+
+                option[0].style.display = 'block'
+
+            })
+
+            for (var i = 0; i < question.length; i++) {
+
+                question[i].addEventListener('click', function () {
+
+                    console.log(this.innerHTML);
+
+                    if (this.innerHTML === '33') {
+
+                        // 对于不能点击的选项
+
+                        alert('无效选项')
+
+                    } else {
+
+                        choose[0].value = this.innerHTML //获取dom的文本
+
+                        option[0].style.display = 'none'
+
+                    }
+
+                })
+
+            }
+
+        </script>
+
+
+
+        <div style="width: 50%; margin:0 auto">
+               <p>用户信息：</p>
+               <ul>
+                   <li>{{ user.uuid }}</li>
+                   <li>{{ user.username }}</li>
+
+                   <p>团队列表：</p>
+                   {% for organization in user.organizations %}
+                       <p>{{ organization.uuid }}</p>
+                       <ul>
+                           <li>{{ organization.uuid }}</li>
+                           <li>{{ organization.name }}</li>
+                           <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+                       </ul>
+                   {% endfor %}
+               </ul>
+
+               <p>团队信息：</p>
+               <ul>
+                   <li>{{ organization.uuid }}</li>
+                   <li>{{ organization.name }}</li>
+                   <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+               </ul>
+           </div>
+
+
+
+```HTML
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>集核云软盘 - 购买页面</title>
+    <link rel="stylesheet" href="{% static 'business/recharge.css' %}"/>
+</head>
+<body>
+<div>
+    <div style="width: 50%; margin:0 auto">
+        <p>用户信息：</p>
+        <ul>
+            <li>{{ user.uuid }}</li>
+            <li>{{ user.username }}</li>
+
+            <p>团队列表：</p>
+            {% for organization in user.organizations %}
+                <p>{{ organization.uuid }}</p>
+                <ul>
+                    <li>{{ organization.uuid }}</li>
+                    <li>{{ organization.name }}</li>
+                    <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+                </ul>
+            {% endfor %}
+        </ul>
+
+        <p>团队信息：</p>
+        <ul>
+            <li>{{ organization.uuid }}</li>
+            <li>{{ organization.name }}</li>
+            <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+        </ul>
+
+        <p>服务信息：</p>
+        {% for service in services %}
+            <p>{{ service.id }}</p>
+            <ul>
+                <li>{{ service.id }}</li>
+                <li>{{ service.name }}</li>
+                <li>{{ service.type }}</li>
+                <li>{{ service.total_space }}</li>
+                <li>{{ service.max_members }}</li>
+                <li>{{ service.price }}</li>
+                <li>{{ service.origin_price }}</li>
+                <li>{{ service.description }}</li>
+            </ul>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>
+
+```
+
+```HTML
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>集核云软盘 - 套餐订单</title>
+</head>
+<body>
+<div>
+    <div style="width: 50%; margin:0 auto">
+        <p>用户信息：</p>
+        <ul>
+            <li>{{ user.uuid }}</li>
+            <li>{{ user.username }}</li>
+
+            <p>团队列表：</p>
+            {% for organization in user.organizations %}
+                <p>{{ organization.uuid }}</p>
+                <ul>
+                    <li>{{ organization.uuid }}</li>
+                    <li>{{ organization.name }}</li>
+                    <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+                </ul>
+            {% endfor %}
+        </ul>
+
+        <p>团队信息：</p>
+        <ul>
+            <li>{{ organization.uuid }}</li>
+            <li>{{ organization.name }}</li>
+            <li>{% widthratio organization.balance 1e6 1 %} 元</li>
+        </ul>
+
+        <p>订单信息：</p>
+        <ul>
+            <li>{{ order.uuid }}</li>
+            <li>{{ order.organization.name }}</li>
+            <li>{% widthratio order.organization.balance 1e6 1 %} 元</li>
+            <li>{{ order.price }}</li>
+            <li>{{ order.channel }}</li>
+            <li>{{ order.trade_no }}</li>
+            <li>{{ order.qr_code }}</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+
+```

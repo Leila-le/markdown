@@ -23,7 +23,7 @@ class CrmViewMixin:
 ```
 其中user: RichMan表示user的类型为RichMan,customer: Customer同理.
 
-### 4. @classmethod 
+### 4. @classmethod
 是一个装饰器，用于将一个方法定义为类方法。
 类方法是属于类的方法，而不是类的实例。类方法可以直接通过类名来调用，而不需要创建类的实例。类方法通常用于执行与类相关的操作，但不需要访问实例属性或方法。
 ```python
@@ -157,8 +157,8 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
    * 构造函数:  constructor(kwargs)
    * 计算属性:
      * get count()
-     * get pageSize() 
-     * get current() 
+     * get pageSize()
+     * get current()
      * get previous()
      * get next()
    * 方法:
@@ -188,7 +188,7 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
     * 方法:
       * 含有mounted()
       * focusName():将焦点置于名字输入框上方
-        
+
             在方法内部，首先使用this.$nextTick()方法来确保在DOM更新后执行后续操作。$nextTick()是Vue.js提供的一个异步方法，用于在DOM更新周期结束后执行回调函数。
             在回调函数中，通过this.$refs.txtName获取名字输入框的引用。$refs是Vue.js提供的一个特殊属性，用于获取组件或元素的引用。
             接下来，通过检查txtName是否存在，即确保找到了名字输入框的引用。如果存在，则调用focus()方法将焦点设置在名字输入框上。
@@ -230,7 +230,7 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
 12. class CustomerPage :销售管理
     * 构造函数: constructor()
     * 计算属性(Vue.js中的一个特性): get pageTitle()
-    * 方法: 
+    * 方法:
       * reload()
       * unshiftCustomer(customer, isAdding)
       * wantToAdd()
@@ -256,7 +256,7 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
       * cancelEditing():撤销修改
     * async updatePassword():设置密码
 16. class RichmanPage:内部管理??
-    * 构造函数:constructor() 
+    * 构造函数:constructor()
     * 方法
       *  roleColor(role)
     * async reload():重新加载用户列表
@@ -274,23 +274,11 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
     * static变量:
         * static components = {Pagination, CustomerEditor, CustomerViewer};
         * static routes = [{ path: '/', component: Dashboard },]
-        
+
               path 是 URL 路径，表示前端应用程序中的特定页面或组件。它可以是一个相对路径（如 '/'），也可以包含动态参数（如 '/users/:id'）。
               component 是与该路径关联的组件，它可以是一个 Vue.js 组件、React 组件或其他前端框架中的组件。
               当用户访问指定的路径时，与该路径关联的组件将被加载和渲染。
               在给定的示例中，{ path: '/', component: Dashboard } 表示当用户访问根路径 '/' 时，将加载名为 Dashboard 的组件。
-
-
-任务:
-1. 添加实际拜访人姓名,仅管理员权限,非管理员选择无效(进度:完成,设想要不要弄一个提示框)
-2. 添加地点筛选功能,弄成CityFilter组件(进度:完成)
-3. 在合同列表中增加列表,展示签订人员,开始时间,结束时间.还有增加和修改操作,在该操作中需要展示该model中的所有内容.
-    - 完成添加列表,增加功能,
-    - 待完成:修改,展示详细信息(打算展示的时候图标为信封打开效果)
-    - 出现的问题:修改的时候出现:上传合同信息出错了: 405，返回结果: [object Object],PATCH http://127.0.0.1:8000/api/public/customers/2/contracts/ 405 (Method Not Allowed)原因：url地址错误：/api/public/customers/" + this.customerProp.id  + "/contracts/" + this.contract.id + "/"
-    - 展示详细信息的时候页面为空,ncaught SyntaxError: Unexpected end of input ···原因：写的v-if="select=='detailsContract'"写成：v-if="select=='ditailsContract'"
-4. 进阶:添加时候原框左移,添加新框(完成)
-5. 保存并下一个 功能、
 
 ### api_public的类的作用:
 1. class Http401(APIException):自定义的异常类，它继承自 Django REST Framework 中的 APIException 类。
@@ -300,7 +288,7 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
 2. class CrmPagination(PageNumberPagination):CRM分页
 3. class CrmViewMixin:自定义混合类（mixin class），用于在视图类中添加与 CRM 相关的共享功能和行为。
 4. class CrmModelViewSet(CrmViewMixin, ModelViewSet):Crm模型视图集
-    
+
        ModelViewSet 是 Django REST Framework 提供的一个视图集类，
        它封装了常见的 CRUD（创建、读取、更新、删除）操作，并提供了默认的路由和操作方法。
 5. class CustomerSerializer(serializers.ModelSerializer):序列化器（serializer）类
@@ -312,19 +300,19 @@ $nextTick 是 Vue.js 实例的一个方法，用于在下次 DOM 更新循环结
     * def get_queryset(self):
     * def get_serializer_context(self):
     * def perform_update(self, serializer):
-    * 路径: 
+    * 路径:
       * path("customers/<int:customer_id>/visitations/", VisitationViewSet.as_list_view()),
       * path("customers/<int:customer_id>/visitations/<int:id>/", VisitationViewSet.as_detail_view()),
-                
+
             * as_list_view() 方法用于生成用于处理访问记录列表的视图函数或视图类。
-                             这意味着当发送一个 GET 请求到该视图时，它将返回访问记录的列表数据。 
+                             这意味着当发送一个 GET 请求到该视图时，它将返回访问记录的列表数据。
             * as_detail_view() 方法用于生成用于处理单个访问记录的详细信息的视图函数或视图类。
                              这意味着当发送一个 GET 请求到该视图时，它将返回指定访问记录的详细数据。
 11. class RichManSerializer(serializers.ModelSerializer):序列化器（serializer）类
 12. class RichManViewSet(CrmModelViewSet):通过继承混合类来拓展管理员的功能
 13. class ProfileSerializer(serializers.ModelSerializer):序列化器（serializer）类
 14. class ProfileAPIView(CrmViewMixin, RetrieveUpdateAPIView):
-        
+
         RetrieveUpdateAPIView 是一个内置的视图类，用于处理获取和更新单个对象的 API 请求。
         通过继承 RetrieveUpdateAPIView，ProfileAPIView 可以处理获取和更新用户配置文件信息的请求。
 15. class PasswordAPIView(CrmViewMixin, APIView):
@@ -401,6 +389,288 @@ attachment:Optional[FiledFile]->合同附件
 要怎样才能在点击子组件的closeContract()时候只关闭子模态框,而不关闭父模态框??
 将子模态框的css进行display:none
 
-剩保存并下一个没实现(删除,要实现吗)
-完善搜索界面,输入搜索内容后,展示所有用户(分权限吧) 完成11.27
-更新的时候不是覆盖而是重新创建了一条(需改) 完成11.27
+### setting.py
+#### LOGGING
+```python
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s)'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'log_file': {
+            'level': "INFO",
+            "class": "logging.FileHandler",
+            "formatter": "verbose",
+            "filename": BASE_DIR / "../logs/django.log" if not DEBUG else "/dev/null",
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'log_file'],
+            'propagate': True,
+            'level': 'INFO',
+        },
+        'dpcrm': {
+            'handlers': ['console', 'log_file'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+    }
+}
+```
+
+    logging模块采用了模块化设计，主要包含四种组件：
+
+        Loggers：记录器，提供应用程序代码能直接使用的接口；
+
+        Handlers：处理器，将记录器产生的日志发送至目的地；
+
+        Filters：过滤器，提供更好的粒度控制，决定哪些日志会被输出；
+
+        Formatters：格式化器，设置日志内容的组成结构和消息字段。
+
+
+### api_public.py
+```python
+class CustomerViewSet(CrmModelViewSet):
+    queryset = Customer.objects.all()
+    lookup_field = "id"
+    serializer_class = CustomerSerializer
+    filter = ""
+    search_fields = ("name", "identifier", "address", "shops", "contacts")
+
+    def get_object(self):
+    customer = super(CustomerViewSet, self).get_object()
+    self.check_customer(self.request.user, customer)
+    return customer
+```
+
+    其中:queryset、loofup_field、serializer_class、filter、search_fields的属性都是类属性，这些属性的类型可以是任意类型，取决于具体的实现。
+    常见的类型可能包括字符串、整数、布尔值、元组等。
+    它们可以直接写在类定义的下方，而不需要使用函数进行包装，是因为在Python中，类的属性可以直接在类定义中进行赋值。这是Python类的语法规则之一。
+    通过将这些属性直接写在类下方，可以更清晰地将其与其他类属性和方法关联起来，使得代码更易读和维护。
+    需要注意的是，这些类属性在类级别上共享相同的值，而不是每个类实例都有自己的副本。这意味着它们在整个类中都是可访问和可用的。
+    如果在def get_object要使用filter,则为self.filter
+
+===========================
+操作记录可能用到的模型:
+Operation:客户操作记录
+
+    operator:操作员
+    customer:客户
+    name:操作类型
+    old_value:json旧值
+    new_value:json新值
+    valid_form:生效时间
+    created:创建时间
+
+sellerAction:销售动作
+
+    operator:操作员
+    customer:客户
+    action:动作
+    datetime:发生时间
+
+OperationLog:操作日志
+
+    user:用户
+    content:日志内容
+    params:额外信息
+    created:记录时间
+
+Customer:客户详情表
+
+    函数to_json:["name", "identifier", "description", "address", "responsibles",
+                      "contacts", "state", "score"]
+
+
+创建合同信息:get_serializer_context->get_queryset->get_serializer_context
+编辑合同信息:get_queryset->get_serializer_context->get_queryset->get_serializer_context
+删除合同信息:get_queryset->get_queryset->get_serializer_context
+
+
+==========Django-signal----------
+在Django信号接收器函数中，(sender, instance, created, **kwargs) 是接收到信号时的参数。这些参数的含义：
+
+    sender：发送信号的模型类。在信号连接时，通过 sender 参数指定要连接的模型类。当信号触发时，sender 参数将是发送信号的模型类。
+
+    instance：与信号相关联的模型实例。在信号连接时，您可以指定要与信号关联的模型类，当信号触发时，instance 参数将是触发信号的模型实例。
+
+    created：一个布尔值，指示是否是创建了新的模型实例。如果是创建了新的模型实例，则为 True，否则为 False。通常在处理 post_save 信号时使用此参数来区分创建和更新操作。
+
+    **kwargs：一个包含其他信号参数的字典。这是一个可变关键字参数，可以接收和处理其他自定义参数。
+
+
+在customer的view中发送信号的时候kwargs添加:
+在create中添加 操作者:'user'
+在update中添加 操作者"user" 旧值"old_value" 修改的对应字段名"change"
+
+
+
+暂存:
+``` javascript
+class ProgrammerPage {
+       static templateUrl = "programmer.html";
+       static props = ["filter"];
+       static components = {ProgramEditor, CityFilter, Pagination, CustomerViewer};
+       static inject = ["profile"];
+
+       constructor() {
+           this.filter = "charged";
+           this.orderBy = "";
+           this.filterBy = {
+               responsibles: "",
+               city: "",
+               state: 1
+           };
+           this.totalScore = 0;
+           this.editingCustomer = {};
+           this.viewingCustomer = {};
+           this.page = {
+               results: []
+           };
+       }
+
+       reload() {
+           if (!this.profile.is_programmer) {
+               return;
+           }
+           workers.kill("load_customers");
+           workers.spawnWithName("load_customers", () => this.loadCustomers());
+       }
+
+       valueFilterByCity(selectedValue) {
+           this.filterBy.city = selectedValue;
+           this.reload();
+       }
+
+       cancelSearch() {
+           this.filterBy.search = "";
+           this.$router.push({path: "/customers/all/", query: this.filterBy.search});
+           if (this.profile.role === CrmRole.Engineer) {
+               this.$router.push({path: "/services/charged/", query: this.filterBy.search});
+           }
+           this.reload();
+       }
+
+       async loadCustomers() {
+           showLoading();
+           try {
+
+               let text = Object.values(this.$route.query).join('') || "";
+               this.filterBy.search = text;
+               let query = Object.assign({"order_by": this.orderBy, "text": text}, this.filterBy);
+               let resp = await http.get("/api/public/customers/" + this.filter + "/", query);
+               if (!resp.isOk) {
+                   console.error("出错了！不能加载列表。");
+                   return;
+               }
+               let totalScore = 0;
+               for (let customer of resp.json.results) {
+                   totalScore += customer.score;
+               }
+               this.totalScore = totalScore;
+               Object.assign(this.page, resp.json);
+           } catch (error) {
+               console.error("出错了!", error);
+           } finally {
+               hideLoading();
+           }
+       }
+
+       get pageTitle() {
+           if (this.filter !== "charged") {
+               console.warn("页面路径不对:", self.filter);
+           }
+           return "已签客户";
+       }
+
+       unshiftCustomer(customer) {
+           let pageResults = toRaw(this.page).results || [];
+           for (let i = 0; i < pageResults.length; ++i) {
+               if (pageResults[i].id === customer.id) {
+                   pageResults.splice(i, 1);
+                   break;
+               }
+           }
+           pageResults.unshift(customer);
+           this.page.results = pageResults;
+           this.$forceUpdate();
+       }
+
+       wantToEdit(customerId) {
+           let found = findCustomer(this.page.results, customerId);
+           if (found !== null) {
+               clearAndAssign(this.editingCustomer, found);
+               console.log("this.editingCustomer", this.editingCustomer);
+           }
+       }
+
+       wantToView(customerId) {
+           let found = findCustomer(this.page.results, customerId);
+           if (found !== null) {
+               clearAndAssign(this.viewingCustomer, found);
+           }
+       }
+   }
+```
+```python
+def is_internal_network(request):
+    internal_networks = [
+        ipaddress.ip_network('xxx.xxx.xxx.xxx'),
+        ipaddress.ip_network('xxx.xxx.xxx.xxx'),
+    ]
+    www_networks = [
+        ipaddress.ip_network('xxx.xxxx.xxx'),
+    ]
+    client_ip = request.META.get('REMOTE_ADDR')
+    client_ip = ipaddress.ip_address(client_ip)
+
+    for network in internal_networks:
+        if client_ip in network:
+            return True
+
+    for network in www_networks:
+        if client_ip in network:
+            return False
+    return False
+```
+
+改进的地方：
+1. 如果地址确定，就设为集合来提高查找速度。
+2. 使用any（）函数来简化代码，避免显式的循环
+3. 如果您的 IP 地址和网络列表非常大，您可以考虑使用更高效的数据结构，例如 IP 地址的 Patricia Trie 或 Radix Tree 来进行快速查找。：
+```python
+INTERNAL_NETWORKS = {
+    ipaddress.ip_network('xxx.xxx.xxx.xxx'),
+    ipaddress.ip_network('xxx.xxx.xxx.xxx'),
+}
+
+WWW_NETWORKS = {
+    ipaddress.ip_network('xxx.xxxx.xxx'),
+}
+
+def is_internal_network(request):
+    client_ip = request.META.get('REMOTE_ADDR')
+    client_ip = ipaddress.ip_address(client_ip)
+
+    if any(client_ip in network for network in INTERNAL_NETWORKS):
+        return True
+
+    if any(client_ip in network for network in WWW_NETWORKS):
+        return False
+
+    return False
+```
